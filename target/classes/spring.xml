@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans 
+           http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+               
+     <context:annotation-config/>
+
+	<bean id="tri-super" class = "demo.Traingle" name="tname">
+		<property name="pointA" ref = "pointA">
+		</property>
+	</bean> 
+	<bean id="tri" class = "demo.Traingle" parent="tri-super">
+		<property name="pointB" ref = "pointB"></property>
+		<property name="pointC" ref = "pointC"></property>
+	</bean> 
+	<bean id="tt" class = "demo.Traingle" parent="tri">
+		<property name="pointB" ref = "pointD"></property>
+	</bean> 
+
+ 	<bean id="traingle" class = "demo.Traingle" autowire="byName" init-method="myInit" destroy-method="cleanup"/> 
+ 	
+ 	<bean id="poly-super" class="demo.Polygon ">
+ 		<property name="points">
+ 			<list>
+ 				<ref bean="pointA"/>
+ 				<ref bean="pointB"/>
+ 			</list>
+ 		</property>
+ 	</bean>
+ 		<bean id="poly" class="demo.Polygon" parent="poly-super">
+ 		<property name="points">
+ 			<list merge="true">
+ 				<ref bean="pointC"/>
+ 				<ref bean="pointD"/>
+ 			</list>
+ 		</property>
+ 	</bean>
+ 	
+ 	<bean id="pointA" class = "demo.Point">
+		<property name="x" value = "${pointA.x}"></property>
+		<property name="y" value = "${pointA.y}"></property>
+	</bean>    
+	<bean class="demo.MyBeanPostProcessor" />
+	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations" value="configure.properties"></property>
+	</bean>
+
+	<bean id="pointB" class = "demo.Point">
+		<property name="x" value = "30"></property>
+		<property name="y" value = "40"></property>
+	</bean>    
+	<bean id="pointC" class = "demo.Point">
+		<property name="x" value = "50"></property>
+		<property name="y" value = "70"></property>
+	</bean>
+	<bean id="pointD" class = "demo.Point">
+		<property name="x" value = "55"></property>
+		<property name="y" value = "94"></property>
+	</bean>    
+	<bean id="cent" class = "demo.Point">
+		<property name="x" value = "45"></property>
+		<property name="y" value = "64"></property>
+	</bean>    
+	
+	<bean id="circle" class="demo.Circle" >
+		
+	</bean>
+	
+	<bean id="myRombus" class="demo.MyRombus" />
+</beans> 
